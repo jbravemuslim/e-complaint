@@ -3,16 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Complain;
-use App\Models\Response;
+use App\Support\DashboardStats;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $prosesCount = Complain::where('status', 'proses')->count();
-        $ditanggapiCount = Response::where('admin_id', auth()->id())->count();
-
-        return view('admin.dashboard', compact('prosesCount', 'ditanggapiCount'));
+        return view('admin.dashboard', DashboardStats::staff((int) auth()->id()));
     }
 }

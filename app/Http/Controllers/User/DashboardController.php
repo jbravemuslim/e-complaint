@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Complain;
 use App\Models\Jenis;
 use App\Models\Tujuan;
+use App\Support\DashboardStats;
 
 class DashboardController extends Controller
 {
@@ -13,8 +14,9 @@ class DashboardController extends Controller
     {
         $tujuans = Tujuan::orderBy('nama_unit')->get();
         $jenisList = Jenis::orderBy('nama_jenis')->get();
+        $stat = DashboardStats::personal((int) auth()->id());
 
-        return view('user.dashboard', compact('tujuans', 'jenisList'));
+        return view('user.dashboard', compact('tujuans', 'jenisList', 'stat'));
     }
 
     public function riwayat()

@@ -17,9 +17,13 @@ class EComplainFlowTest extends TestCase
     use RefreshDatabase;
 
     private User $superadmin;
+
     private User $admin;
+
     private User $user;
+
     private Tujuan $tujuan;
+
     private Jenis $jenis;
 
     protected function setUp(): void
@@ -60,7 +64,9 @@ class EComplainFlowTest extends TestCase
 
     public function test_user_pages_render(): void
     {
-        $this->actingAs($this->user)->get('/dashboard')->assertOk()->assertSee('Ajukan Keluhan')->assertSee('corner-ornament', false)->assertSee('panel-card', false);
+        $this->actingAs($this->user)->get('/dashboard')->assertOk()->assertSee('Ajukan Keluhan')->assertSee('panel-card', false);
+        // Ornamen dekoratif pojok kanan atas sudah dihapus dari layout.
+        $this->actingAs($this->user)->get('/dashboard')->assertOk()->assertDontSee('corner-ornament', false)->assertSee('chart-card', false);
         $this->actingAs($this->user)->get('/riwayat')->assertOk()->assertSee('Riwayat Keluhan', false)->assertSee('sub-menu', false);
         $this->actingAs($this->user)->get('/faq')->assertOk();
     }
@@ -117,8 +123,8 @@ class EComplainFlowTest extends TestCase
     public function test_superadmin_pages_and_master_crud(): void
     {
         foreach (['/superadmin', '/superadmin/complains', '/superadmin/responses', '/superadmin/users',
-                     '/superadmin/admins', '/superadmin/tujuans', '/superadmin/jenis', '/superadmin/faqs',
-                     '/superadmin/laporan'] as $url) {
+            '/superadmin/admins', '/superadmin/tujuans', '/superadmin/jenis', '/superadmin/faqs',
+            '/superadmin/laporan'] as $url) {
             $this->actingAs($this->superadmin)->get($url)->assertOk($url)->assertSee('page-head', false, $url);
         }
         $this->actingAs($this->superadmin)->get('/superadmin/laporan/cetak')->assertOk();

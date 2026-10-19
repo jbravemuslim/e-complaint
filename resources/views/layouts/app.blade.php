@@ -64,7 +64,6 @@
     <a href="#" id="menu-toggle"><i class="material-icons">menu</i></a>
     <span>E-Complain</span>
 </div>
-<div class="corner-ornament"></div>
 
 <main class="main-content">
     @if(session('success'))
@@ -84,6 +83,8 @@
     @endif
     @yield('content')
 </main>
+
+@stack('scripts')
 
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function () {
